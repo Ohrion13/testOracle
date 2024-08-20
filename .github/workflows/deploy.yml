@@ -49,8 +49,12 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
+
+          sudo docker images
+
           sudo docker pull testoracle
           sudo docker stop testoracle || true
           sudo docker rm testoracle || true
+          
           sudo docker run -d --name testoracle -p 80:80 testoracle
         EOF
