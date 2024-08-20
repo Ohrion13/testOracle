@@ -50,8 +50,8 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
           sudo docker info
           sudo docker images
-          sudo docker pull testoracle
+          sudo docker pull testoracle:latest
           sudo docker stop testoracle || true
           sudo docker rm testoracle || true
-          sudo docker run -d --name testoracle -p 80:80 testoracle
+          sudo docker run -d --name testoracle -p 80:80 testoracle:latest
         EOF
