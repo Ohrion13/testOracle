@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+name: 🚀 Deploy website on push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t myapp:${{ github.sha }} .
+
+    - name: Test application
+      run: |
+        docker run --name test-container -d -p 8080:80 myapp:${{ github.sha }}
+        sleep 5
+        curl http://localhost:8080 | grep "Hello, World!"
+        docker stop test-container
+
+    - name: Deploy to Oracle Cloud
+      env:
+        PRIVATE_KEY: ${{ secrets.ORACLE_PRIVATE_KEY }}
+        HOST: ${{ secrets.ORACLE_HOST }}
+        USER: ${{ secrets.ORACLE_USER }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
+          docker pull myapp:${{ github.sha }}
+          docker stop myapp || true
+          docker rm myapp || true
+          docker run -d --name myapp -p 80:80 myapp:${{ github.sha }}
+        EOF
