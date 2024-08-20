@@ -1,4 +1,4 @@
 <?php
 // index.php
-echo "Hello, CI/CD!";
+echo "Hello, World!";
 ?>
