@@ -36,9 +36,9 @@ jobs:
           sudo systemctl start docker
           sudo systemctl enable docker
 
-          docker -v
-          docker pull testoracle
-          docker stop testoracle || true
-          docker rm testoracle || true
-          docker run -d --name testoracle -p 80:80 testoracle
+          sudo docker -v
+          sudo docker pull testoracle
+          sudo docker stop testoracle || true
+          sudo docker rm testoracle || true
+          sudo docker run -d --name testoracle -p 80:80 testoracle
         EOF
