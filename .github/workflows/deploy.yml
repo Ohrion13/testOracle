@@ -29,12 +29,12 @@ jobs:
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
 
-          apt-get update
-          apt-get install -y docker.io
-          usermod -aG docker $USER
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo usermod -aG docker $USER
 
-          systemctl start docker
-          systemctl enable docker
+          sudo systemctl start docker
+          sudo systemctl enable docker
 
           docker -v
           docker pull testoracle
