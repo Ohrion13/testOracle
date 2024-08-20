@@ -28,8 +28,8 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
-          docker pull testoracle
-          docker stop testoracle || true
-          docker rm testoracle || true
-          docker run -d --name testoracle -p 80:80 testoracle
+          docker pull testOracle
+          docker stop testOracle || true
+          docker rm testOracle || true
+          docker run -d --name testOracle -p 80:80 testOracle
         EOF
