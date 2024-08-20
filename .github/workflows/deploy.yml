@@ -30,6 +30,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
           # Installer docker si on l'a pas 
           if ! command -v docker &> /dev/null; then
+
             sudo apt-get update
             sudo apt-get install -y docker.io
             sudo usermod -aG docker $USER
@@ -48,8 +49,8 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << EOF
-          sudo docker pull myapp
-          sudo docker stop myapp || true
-          sudo docker rm myapp || true
-          sudo docker run -d --name myapp -p 80:80 myapp
+          sudo docker pull testoracle
+          sudo docker stop testoracle || true
+          sudo docker rm testoracle || true
+          sudo docker run -d --name testoracle -p 80:80 testoracle
         EOF
