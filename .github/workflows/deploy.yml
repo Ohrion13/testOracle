@@ -68,3 +68,4 @@ jobs:
           sudo docker rm testoracle || true
           sudo docker run -d --name testoracle -p 80:80 ${{ secrets.DOCKER_HUB_USERNAME }}/testoracle
         EOF
+        
